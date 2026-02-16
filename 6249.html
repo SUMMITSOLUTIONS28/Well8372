@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Tools Guide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #0a1128;
+            --secondary: #1a1f35;
+            --accent: #00d9ff;
+            --accent2: #ff2a6d;
+            --light: #e0f7fa;
+            --dark: #051129;
+            --success: #00c853;
+            --warning: #ffab00;
+            --danger: #ff1744;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--dark), var(--primary));
+            color: var(--light);
+            font-family: 'Exo 2', sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding-bottom: 80px;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header & Warning */
+        header {
+            text-align: center;
+            padding: 30px 0;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.2rem;
+            background: linear-gradient(to right, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 15px 0;
+            text-shadow: 0 0 20px rgba(0, 217, 255, 0.4);
+            letter-spacing: 2px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--accent);
+            font-weight: 300;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .warning {
+            background: linear-gradient(45deg, #b71c1c, var(--danger));
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px auto;
+            max-width: 800px;
+            box-shadow: 0 5px 25px rgba(255, 23, 68, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .warning h2 {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: white;
+        }
+        
+        .warning p {
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+        
+        /* Installation Section */
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            margin: 30px 0 20px;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .terminal {
+            background: rgba(0, 10, 20, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            line-height: 1.8;
+            border: 1px solid rgba(0, 217, 255, 0.3);
+            box-shadow: inset 0 0 15px rgba(0, 217, 255, 0.1), 0 10px 25px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .terminal-content {
+            position: relative;
+        }
+        
+        .terminal-content pre {
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        
+        .command {
+            color: var(--accent);
+        }
+        
+        .comment {
+            color: #6a9955;
+        }
+        
+        .output {
+            color: #d4d4d4;
+        }
+        
+        /* Tools Grid */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+        
+        .tool-card {
+            background: rgba(10, 25, 47, 0.7);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(0, 217, 255, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+            border-color: var(--accent2);
+        }
+        
+        .tool-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+        }
+        
+        .tool-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .tool-icon {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 217, 255, 0.1);
+            border-radius: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .hydra-icon { color: #ff2a6d; }
+        .john-icon { color: #00c853; }
+        .zap-icon { color: #ffab00; }
+        .medusa-icon { color: #7c4dff; }
+        
+        .tool-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--accent);
+        }
+        
+        .how-it-works, .common-uses, .example, .results {
+            margin: 15px 0;
+            padding: 12px 15px;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.25);
+        }
+        
+        .how-it-works {
+            border-left: 3px solid var(--accent);
+        }
+        
+        .common-uses ul {
+            padding-left: 20px;
+        }
+        
+        .common-uses li {
+            margin-bottom: 8px;
+        }
+        
+        .example {
+            border-left: 3px solid var(--accent2);
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+        }
+        
+        .results {
+            border-left: 3px solid var(--success);
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+        }
+        
+        /* Support Button */
+        .support-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: linear-gradient(45deg, #25d366, #128c7e);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 15px 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(18, 140, 126, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .support-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 12px 25px rgba(18, 140, 126, 0.6);
+        }
+        
+        .support-btn i {
+            font-size: 1.5rem;
+        }
+        
+        /* Particles Background */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section-title {
+                font-size: 1.6rem;
+            }
+            
+            .terminal {
+                padding: 15px;
+                font-size: 0.9rem;
+            }
+            
+            .tool-title {
+                font-size: 1.3rem;
+            }
+            
+            .support-btn {
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .warning h2 {
+                font-size: 1.2rem;
+            }
+            
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <div class="container">
+        <header>
+            <h1>SECURITY TOOLS GUIDE</h1>
+            <div class="subtitle">Mastering Hydra, John the Ripper, OWASP ZAP Fuzzing & Medusa</div>
+            
+            <div class="warning">
+                <h2><i class="fas fa-exclamation-triangle"></i> IMPORTANT WARNING</h2>
+                <p>These security tools are for educational purposes and ethical security testing ONLY. Use them only on systems you own or have explicit written permission to test. Unauthorized access is illegal and unethical.</p>
+            </div>
+        </header>
+        
+        <section>
+            <h2 class="section-title"><i class="fas fa-terminal"></i> Installation Guide</h2>
+            
+            <div class="terminal">
+                <div class="terminal-content">
+                    <pre><span class="comment"># Update and upgrade system packages</span>
+<span class="command">sudo apt update && sudo apt upgrade -y</span>
+<span class="output">Reading package lists... Done
+Building dependency tree... Done
+Calculating upgrade... Done
+Processing triggers for kali-menu (2023.2.0) ...</span>
+
+<span class="comment"># Install security tools</span>
+<span class="command">sudo apt install hydra john zaproxy medusa</span>
+<span class="output">Setting up hydra (9.4-1) ...
+Setting up john (1.9.0-1kali6) ...
+Setting up zaproxy (2.12.0-0kali1) ...
+Setting up medusa (2.2-6) ...</span></pre>
+                </div>
+            </div>
+        </section>
+        
+        <section>
+            <h2 class="section-title"><i class="fas fa-tools"></i> Security Tools Overview</h2>
+            
+            <div class="tools-grid">
+                <!-- Hydra Card -->
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon hydra-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h3 class="tool-title">HYDRA</h3>
+                    </div>
+                    
+                    <div class="how-it-works">
+                        <p><i class="fas fa-cogs"></i> <strong>How it works:</strong> Tries username/password combos via brute-force</p>
+                    </div>
+                    
+                    <div class="common-uses">
+                        <p><i class="fas fa-tasks"></i> <strong>Common uses:</strong></p>
+                        <ul>
+                            <li>Brute-force login pages (HTTP, FTP, SSH, etc.)</li>
+                            <li>Test password strength</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="example">
+                        <p><i class="fas fa-code"></i> <strong>Example:</strong> hydra -l admin -P rockyou.txt http://site.com/login</p>
+                    </div>
+                    
+                    <div class="results">
+                        <p><i class="fas fa-clipboard-list"></i> <strong>Results:</strong></p>
+                        <p>[22][SSH] host: admin password123</p>
+                        <p>Failure messages if no valid combos found</p>
+                    </div>
+                </div>
+                
+                <!-- John the Ripper Card -->
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon john-icon">
+                            <i class="fas fa-unlock-alt"></i>
+                        </div>
+                        <h3 class="tool-title">JOHN THE RIPPER</h3>
+                    </div>
+                    
+                    <div class="how-it-works">
+                        <p><i class="fas fa-cogs"></i> <strong>How it works:</strong> Cracks password hashes using wordlists or brute-force</p>
+                    </div>
+                    
+                    <div class="common-uses">
+                        <p><i class="fas fa-tasks"></i> <strong>Common uses:</strong></p>
+                        <ul>
+                            <li>Crack password hashes (e.g., from leaked DBs)</li>
+                            <li>Test password strength</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="example">
+                        <p><i class="fas fa-code"></i> <strong>Example:</strong> john --wordlist=rockyou.txt hashes.txt</p>
+                    </div>
+                    
+                    <div class="results">
+                        <p><i class="fas fa-clipboard-list"></i> <strong>Results:</strong></p>
+                        <p>admin:password123 (hashes.txt)</p>
+                        <p>Stats on cracked passwords</p>
+                    </div>
+                </div>
+                
+                <!-- OWASP ZAP Fuzzing Card -->
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon zap-icon">
+                            <i class="fas fa-spider"></i>
+                        </div>
+                        <h3 class="tool-title">OWASP ZAP FUZZING</h3>
+                    </div>
+                    
+                    <div class="how-it-works">
+                        <p><i class="fas fa-cogs"></i> <strong>How it works:</strong> Sends malformed data to web app inputs</p>
+                    </div>
+                    
+                    <div class="common-uses">
+                        <p><i class="fas fa-tasks"></i> <strong>Common uses:</strong></p>
+                        <ul>
+                            <li>Test input validation</li>
+                            <li>Find vulnerabilities (e.g., XSS, SQLi)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="example">
+                        <p><i class="fas fa-code"></i> <strong>Example:</strong> Use ZAP's Fuzzing tool on a login form</p>
+                    </div>
+                    
+                    <div class="results">
+                        <p><i class="fas fa-clipboard-list"></i> <strong>Results:</strong></p>
+                        <p>Highlighted vulnerabilities in ZAP's interface</p>
+                        <p>Payload responses (e.g., error messages, XSS triggers)</p>
+                    </div>
+                </div>
+                
+                <!-- Medusa Card -->
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon medusa-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h3 class="tool-title">MEDUSA</h3>
+                    </div>
+                    
+                    <div class="how-it-works">
+                        <p><i class="fas fa-cogs"></i> <strong>How it works:</strong> Brute-force login attempts (like Hydra)</p>
+                    </div>
+                    
+                    <div class="common-uses">
+                        <p><i class="fas fa-tasks"></i> <strong>Common uses:</strong></p>
+                        <ul>
+                            <li>Test password strength on various services</li>
+                            <li>Faster than Hydra in some cases</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="example">
+                        <p><i class="fas fa-code"></i> <strong>Example:</strong> medusa -h site.com -u admin -P rockyou.txt -M http</p>
+                    </div>
+                    
+                    <div class="results">
+                        <p><i class="fas fa-clipboard-list"></i> <strong>Results:</strong></p>
+                        <p>ACCOUNT FOUND: admin password (http://site.com)</p>
+                        <p>Failure messages if no valid combos found</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <button class="support-btn" onclick="window.open('https://wa.me/+254798688920', '_blank')">
+        <i class="fab fa-whatsapp"></i>
+        Get Support on WhatsApp
+    </button>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Particles background
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: "#00d9ff" },
+                shape: { type: "circle" },
+                opacity: { value: 0.5, random: true },
+                size: { value: 3, random: true },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#00d9ff",
+                    opacity: 0.3,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: "none",
+                    random: true,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "repulse" },
+                    onclick: { enable: true, mode: "push" },
+                    resize: true
+                }
+            }
+        });
+        
+        // Card hover effect
+        document.querySelectorAll('.tool-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.boxShadow = `0 15px 30px rgba(0, 0, 0, 0.5), 0 0 30px ${getComputedStyle(card).borderLeftColor}`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.boxShadow = '';
+            });
+        });
+    </script>
+</body>
+</html>

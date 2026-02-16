@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gophish Installation Guide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #0a1128;
+            --secondary: #1a1f35;
+            --accent: #00d9ff;
+            --accent2: #ff2a6d;
+            --light: #e0f7fa;
+            --dark: #051129;
+            --danger: #ff1744;
+            --phish: #9c27b0;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--dark), var(--primary));
+            color: var(--light);
+            font-family: 'Exo 2', sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        /* Header & Warning */
+        header {
+            text-align: center;
+            padding: 30px 0;
+            margin-bottom: 30px;
+            position: relative;
+            width: 100%;
+        }
+        
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.2rem;
+            background: linear-gradient(to right, var(--accent), var(--phish));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 15px 0;
+            text-shadow: 0 0 20px rgba(156, 39, 176, 0.4);
+            letter-spacing: 2px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--accent);
+            font-weight: 300;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .warning {
+            background: linear-gradient(45deg, #b71c1c, var(--danger));
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px auto;
+            max-width: 800px;
+            box-shadow: 0 5px 25px rgba(255, 23, 68, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            animation: pulseWarning 2s infinite;
+        }
+        
+        .warning h2 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: white;
+        }
+        
+        .warning p {
+            font-size: 1rem;
+            line-height: 1.7;
+            text-align: center;
+        }
+        
+        /* Installation Section */
+        .installation {
+            background: rgba(10, 25, 47, 0.7);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 1px solid rgba(156, 39, 176, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            animation: slideUp 1s ease-out;
+        }
+        
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 25px;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            text-align: center;
+        }
+        
+        .terminal {
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            line-height: 1.8;
+            border: 1px solid rgba(0, 217, 255, 0.3);
+            box-shadow: inset 0 0 15px rgba(0, 217, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .terminal-dots {
+            display: flex;
+            gap: 8px;
+            margin-right: 15px;
+        }
+        
+        .terminal-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+        }
+        
+        .dot-red { background: #ff5f56; }
+        .dot-yellow { background: #ffbd2e; }
+        .dot-green { background: #27c93f; }
+        
+        .terminal-title {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+        
+        .terminal-content {
+            position: relative;
+        }
+        
+        .terminal-content pre {
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        
+        .command {
+            color: var(--accent);
+        }
+        
+        .output {
+            color: #d4d4d4;
+            opacity: 0.8;
+        }
+        
+        .step {
+            margin: 30px 0;
+            position: relative;
+        }
+        
+        .step-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* Support Button */
+        .support-btn {
+            background: linear-gradient(45deg, #25d366, #128c7e);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 18px 35px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(18, 140, 126, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            margin-top: 20px;
+            animation: pulseSupport 2s infinite;
+        }
+        
+        .support-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(18, 140, 126, 0.6);
+        }
+        
+        .support-btn i {
+            font-size: 1.8rem;
+        }
+        
+        /* Background Elements */
+        .cyber-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(transparent 24px, rgba(0, 217, 255, 0.05) 25px),
+                linear-gradient(90deg, transparent 24px, rgba(0, 217, 255, 0.05) 25px);
+            background-size: 25px 25px;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        
+        .floating-element {
+            position: fixed;
+            z-index: -1;
+            opacity: 0.1;
+        }
+        
+        .element-1 {
+            top: 20%;
+            left: 10%;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--accent), transparent);
+            animation: float 12s infinite ease-in-out;
+        }
+        
+        .element-2 {
+            top: 60%;
+            right: 15%;
+            width: 100px;
+            height: 100px;
+            background: var(--phish);
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            animation: float 8s infinite ease-in-out reverse;
+        }
+        
+        .element-3 {
+            bottom: 20%;
+            left: 25%;
+            width: 80px;
+            height: 80px;
+            background: var(--accent2);
+            border-radius: 50%;
+            animation: float 10s infinite ease-in-out;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulseWarning {
+            0% { box-shadow: 0 0 0 0 rgba(183, 28, 28, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(183, 28, 28, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(183, 28, 28, 0); }
+        }
+        
+        @keyframes pulseSupport {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+        
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            50% { transform: translate(20px, 20px); }
+            100% { transform: translate(0, 0); }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.6rem;
+            }
+            
+            .terminal {
+                padding: 15px;
+                font-size: 0.9rem;
+            }
+            
+            .support-btn {
+                padding: 15px 25px;
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .warning h2 {
+                font-size: 1.3rem;
+            }
+            
+            .step-title {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cyber-grid"></div>
+    <div class="floating-element element-1"></div>
+    <div class="floating-element element-2"></div>
+    <div class="floating-element element-3"></div>
+    
+    <div class="container">
+        <header>
+            <h1>GOPHISH INSTALLATION</h1>
+            <div class="subtitle">Open-Source Phishing Simulation Toolkit</div>
+            
+            <div class="warning">
+                <h2><i class="fas fa-exclamation-triangle"></i> ETHICAL USE WARNING</h2>
+                <p>Gophish is designed for legitimate security awareness training. Use only on systems you own or have explicit permission to test. Unauthorized phishing attacks are illegal and unethical.</p>
+            </div>
+        </header>
+        
+        <section class="installation">
+            <h2 class="section-title"><i class="fas fa-terminal"></i> Installation Guide</h2>
+            
+            <div class="step">
+                <h3 class="step-title"><i class="fas fa-sync-alt"></i> Update System</h3>
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <div class="terminal-dots">
+                            <div class="terminal-dot dot-red"></div>
+                            <div class="terminal-dot dot-yellow"></div>
+                            <div class="terminal-dot dot-green"></div>
+                        </div>
+                        <div class="terminal-title">security@kali:~</div>
+                    </div>
+                    <div class="terminal-content">
+                        sudo apt update && sudo apt upgrade -y
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <h3 class="step-title"><i class="fab fa-git"></i> Install Git</h3>
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <div class="terminal-dots">
+                            <div class="terminal-dot dot-red"></div>
+                            <div class="terminal-dot dot-yellow"></div>
+                            <div class="terminal-dot dot-green"></div>
+                        </div>
+                        <div class="terminal-title">security@kali:~</div>
+                    </div>
+                    <div class="terminal-content">
+                        <pre><span class="command">sudo apt install git -y</span>
+<span class="output"></span></pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <h3 class="step-title"><i class="fas fa-download"></i> Clone Gophish</h3>
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <div class="terminal-dots">
+                            <div class="terminal-dot dot-red"></div>
+                            <div class="terminal-dot dot-yellow"></div>
+                            <div class="terminal-dot dot-green"></div>
+                        </div>
+                        <div class="terminal-title">security@kali:~</div>
+                    </div>
+                    <div class="terminal-content">
+                        <pre><span class="command">git clone https://github.com/gophish/gophish.git</span>
+<span class="output"></span></pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <h3 class="step-title"><i class="fas fa-folder-open"></i> Enter Directory</h3>
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <div class="terminal-dots">
+                            <div class="terminal-dot dot-red"></div>
+                            <div class="terminal-dot dot-yellow"></div>
+                            <div class="terminal-dot dot-green"></div>
+                        </div>
+                        <div class="terminal-title">security@kali:~</div>
+                    </div>
+                    <div class="terminal-content">
+                        <pre><span class="command">cd gophish</span>
+<span class="output"></span></pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step">
+                <h3 class="step-title"><i class="fas fa-play-circle"></i> Run Gophish</h3>
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <div class="terminal-dots">
+                            <div class="terminal-dot dot-red"></div>
+                            <div class="terminal-dot dot-yellow"></div>
+                            <div class="terminal-dot dot-green"></div>
+                        </div>
+                        <div class="terminal-title">security@kali:~/gophish$</div>
+                    </div>
+                    <div class="terminal-content">
+                        <pre><span class="command">./gophish</span>
+<span class="output"></span></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <button class="support-btn" onclick="window.open('https://wa.me/+254798688920', '_blank')">
+            <i class="fab fa-whatsapp"></i>
+            Get Support on WhatsApp
+        </button>
+    </div>
+
+    <script>
+        // Terminal typing effect
+        document.addEventListener('DOMContentLoaded', function() {
+            const terminals = document.querySelectorAll('.terminal-content');
+            let delay = 500;
+            
+            terminals.forEach(terminal => {
+                const pre = terminal.querySelector('pre');
+                const originalContent = pre.innerHTML;
+                pre.innerHTML = '';
+                let i = 0;
+                
+                setTimeout(() => {
+                    function typeWriter() {
+                        if (i < originalContent.length) {
+                            pre.innerHTML += originalContent.charAt(i);
+                            i++;
+                            setTimeout(typeWriter, 20);
+                        }
+                    }
+                    typeWriter();
+                }, delay);
+                
+                delay += 1000;
+            });
+        });
+    </script>
+</body>
+</html>

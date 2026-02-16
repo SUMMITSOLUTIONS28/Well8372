@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CiLocks | Official Setup Guide</title>
+    <!-- CSS - This handles the visual appeal -->
+    <style>
+        :root {
+            --neon-green: #00ff88;
+            --dark-bg: #0a0b10;
+            --card-bg: #161b22;
+            --text-gray: #8b949e;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: #ffffff;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Hero Section */
+        header {
+            width: 100%;
+            padding: 60px 20px;
+            text-align: center;
+            background: linear-gradient(180deg, #111827 0%, var(--dark-bg) 100%);
+            border-bottom: 1px solid #30363d;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin: 0;
+            color: var(--neon-green);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            text-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
+        }
+
+        .subtitle {
+            color: var(--text-gray);
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+
+        /* Content Container */
+        .main-content {
+            max-width: 900px;
+            width: 90%;
+            padding: 40px 0;
+        }
+
+        .section-card {
+            background: var(--card-bg);
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease;
+        }
+
+        .section-card:hover {
+            border-color: var(--neon-green);
+        }
+
+        h2 {
+            color: var(--neon-green);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Terminal/Code Look */
+        .code-window {
+            background: #000000;
+            border-radius: 8px;
+            padding: 20px;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            color: #d1d5db;
+            position: relative;
+            margin: 15px 0;
+            border-left: 4px solid var(--neon-green);
+        }
+
+        .code-window::before {
+            content: "Terminal";
+            position: absolute;
+            top: -10px;
+            right: 15px;
+            font-size: 0.7rem;
+            background: var(--neon-green);
+            color: black;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .cmd { color: var(--neon-green); }
+
+        /* Requirements List */
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 10px 0;
+            border-bottom: 1px solid #21262d;
+            display: flex;
+            align-items: center;
+        }
+
+        li::before {
+            content: "✔";
+            color: var(--neon-green);
+            margin-right: 15px;
+        }
+
+        /* Warning Box */
+        .warning-box {
+            background: rgba(248, 81, 73, 0.1);
+            border: 1px solid #f85149;
+            color: #f85149;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        /* WhatsApp Button */
+        .support-container {
+            text-align: center;
+            margin: 50px 0;
+        }
+
+        .whatsapp-btn {
+            background-color: #25d366;
+            color: white;
+            padding: 20px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 10px 20px rgba(37, 211, 102, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(37, 211, 102, 0.4);
+            filter: brightness(1.1);
+        }
+
+        footer {
+            margin-top: 50px;
+            padding: 20px;
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>CiLocks Guide</h1>
+        <p class="subtitle">Advanced Android PIN & Pattern Recovery Tool</p>
+    </header>
+
+    <div class="main-content">
+        
+        <!-- Summary -->
+        <div class="section-card">
+            <h2>📝 Summary of Instructions</h2>
+            <p>This guide provides a detailed installation of <strong>CiLocks</strong>, a brute-force tool designed for Linux/Termux to recover Android security locks via ADB.</p>
+        </div>
+
+        <!-- Installation -->
+        <div class="section-card">
+            <h2>🚀 Step 1: Dependencies</h2>
+            <p>Refresh your local package repository and install Git:</p>
+            <div class="code-window">
+                <span class="cmd">$</span> sudo apt update && sudo apt upgrade<br>
+                <span class="cmd">$</span> sudo apt install git
+            </div>
+            
+            <p>Clone the tool directly from the official repository:</p>
+            <div class="code-window">
+                <span class="cmd">$</span> git clone https://github.com<br>
+                <span class="cmd">$</span> cd CiLocks<br>
+                <span class="cmd">$</span> chmod +x cilocks
+            </div>
+        </div>
+
+        <!-- Requirements -->
+        <div class="section-card">
+            <h2>🔧 Hardware & Setup</h2>
+            <p>Ensure you have the following ready before starting the process:</p>
+            <ul>
+                <li><strong>ADB:</strong> Install via <code>sudo apt install adb</code></li>
+                <li><strong>OTG Cable:</strong> To connect the host and target device.</li>
+                <li><strong>Data Cable:</strong> A standard USB charging/data cable.</li>
+            </ul>
+        </div>
+
+        <!-- Execution -->
+        <div class="section-card">
+            <h2>⚡ Step 2: Execution</h2>
+            <p>Run the script and follow the automated menu to select the lock type:</p>
+            <div class="code-window">
+                <span class="cmd">$</span> sudo bash cilocks
+            </div>
+            <p><em>Note: You can choose between PIN recovery or Pattern recovery once the tool starts.</em></p>
+        </div>
+
+        
+
+        <!-- Support Button -->
+        <div class="support-container">
+            <h3>Need Help with Installation?</h3>
+            <p class="subtitle" style="margin-bottom: 25px;">Click the button below to chat with me directly.</p>
+            
+            <!-- UPDATE THE NUMBER BELOW (e.g., 2348000000000) -->
+            <a href="https://wa.me/+254798688920" class="whatsapp-btn">
+                <span>Direct Support via WhatsApp</span>
+            </a>
+        </div>
+
+    </div>
+
+    <footer>
+        &copy; 2024 CiLocks Guide | Developed for Educational Purposes
+    </footer>
+
+</body>
+</html>
