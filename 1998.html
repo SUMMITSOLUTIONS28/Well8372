@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ethical Hacking Starter Kit</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', sans-serif;
+}
+
+body{
+    background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    color:white;
+    padding:40px 20px;
+}
+
+.container{
+    max-width:1000px;
+    margin:auto;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter: blur(15px);
+    border-radius:20px;
+    padding:40px;
+    box-shadow:0 0 40px rgba(0,0,0,0.6);
+}
+
+h1{
+    text-align:center;
+    font-size:32px;
+    margin-bottom:20px;
+    background:linear-gradient(to right,#00f5ff,#00ff99);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+h2{
+    margin-top:30px;
+    margin-bottom:15px;
+    color:#00f5ff;
+}
+
+p{
+    margin-bottom:15px;
+    line-height:1.6;
+}
+
+ul{
+    margin-left:20px;
+    margin-bottom:15px;
+}
+
+li{
+    margin-bottom:8px;
+}
+
+pre{
+    background:#111;
+    padding:15px;
+    border-radius:10px;
+    overflow-x:auto;
+    margin-bottom:15px;
+    color:#00ff99;
+}
+
+a{
+    color:#00ffcc;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+a:hover{
+    text-decoration:underline;
+}
+
+.notice{
+    background:rgba(255,0,0,0.2);
+    padding:15px;
+    border-radius:10px;
+    margin-bottom:20px;
+    border:1px solid red;
+}
+
+.proceed-btn{
+    display:block;
+    margin:40px auto 0 auto;
+    padding:15px 40px;
+    font-size:18px;
+    border:none;
+    border-radius:50px;
+    background:linear-gradient(45deg,#00ffcc,#00f5ff);
+    color:#000;
+    cursor:pointer;
+    transition:0.4s;
+    box-shadow:0 0 20px #00ffcc;
+}
+
+.proceed-btn:hover{
+    transform:scale(1.1);
+    box-shadow:0 0 40px #00ffcc;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>⚠️ Compulsory Requirements For Learning Ethical Hacking ⚠️</h1>
+
+<div class="notice">
+Before starting ethical hacking, you MUST understand Linux basics, Termux usage, Debian setup, sudo configuration, and Python virtual environments.
+These are foundational cybersecurity skills.
+</div>
+
+<h2>📥 Download Termux</h2>
+<p>Download official Termux from F-Droid:</p>
+<a href="https://f-droid.org/packages/com.termux/" target="_blank">
+👉 Click Here to Download Termux
+</a>
+
+<h2>💻 10 Basic & Must-Know Termux Commands</h2>
+<ul>
+<li><b>pkg update</b> – Update package list</li>
+<li><b>pkg upgrade</b> – Upgrade installed packages</li>
+<li><b>pkg install package_name</b> – Install package</li>
+<li><b>ls</b> – List files</li>
+<li><b>cd folder</b> – Change directory</li>
+<li><b>pwd</b> – Show current path</li>
+<li><b>mkdir folder</b> – Create folder</li>
+<li><b>rm file</b> – Delete file</li>
+<li><b>clear</b> – Clear screen</li>
+<li><b>exit</b> – Exit terminal</li>
+</ul>
+
+<h2>🐧 Installing Debian Distro</h2>
+
+<pre>
+pkg update && pkg upgrade
+pkg install proot-distro
+proot-distro install debian
+proot-distro login debian
+</pre>
+
+<h2>🔐 Proper Sudo Installation & Configuration</h2>
+
+<pre>
+apt update
+apt install sudo
+
+# Create new user (example: simiyu)
+adduser simiyu
+
+# Add user to sudo group
+usermod -aG sudo simiyu
+
+# Edit sudoers safely
+visudo
+
+# Ensure this line exists inside file:
+%sudo   ALL=(ALL:ALL) ALL
+
+# OR manually add:
+simiyu ALL=(ALL:ALL) ALL
+
+# Switch to user
+su simiyu
+
+# Test sudo
+sudo apt update
+</pre>
+
+<h2>🐍 Setup Python Virtual Environment</h2>
+
+<pre>
+apt install python3
+apt install python3-venv
+python3 -m venv myenv
+source myenv/bin/activate
+deactivate
+</pre>
+
+<button class="proceed-btn" onclick="window.open('https://summitsolutions28.github.io/Well8372/2858.html','_blank')">
+🚀 Proceed  Next page
+</button>
+
+</div>
+
+</body>
+</html>
