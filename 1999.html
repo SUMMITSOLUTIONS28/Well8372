@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Topics — Interactive List</title>
+
+<style>
+:root{
+  --bg:#0f1226;
+  --accent:#7c5cff;
+  --muted:#98a0c1;
+  --glass-border:rgba(255,255,255,0.06);
+  --glass-2:rgba(255,255,255,0.02);
+}
+body{
+  margin:0;
+  font-family:Inter,system-ui;
+  background:var(--bg);
+  color:#eaf0ff;
+  padding:32px;
+}
+.container{max-width:1000px;margin:auto;display:grid;gap:20px;}
+header{display:flex;gap:16px;align-items:center;padding:18px;border-radius:16px;border:1px solid var(--glass-border);}
+.logo{
+  width:64px;height:64px;border-radius:12px;
+  background:linear-gradient(135deg,var(--accent),#00c8ff);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:800;color:white;
+}
+.list-card{padding:18px;border-radius:18px;border:1px solid var(--glass-border);}
+ol{list-style:none;padding:0;display:grid;gap:14px;}
+.topic{
+  padding:14px;
+  border-radius:12px;
+  border:1px solid var(--glass-2);
+  background:rgba(255,255,255,0.02);
+}
+.title{font-size:16px;font-weight:600;}
+.meta{font-size:13px;color:var(--muted);margin-top:4px;}
+.details{
+  display:none;
+  margin-top:12px;
+  font-size:14px;
+  line-height:1.5;
+}
+.controls{
+  margin-top:12px;
+  display:flex;
+  gap:10px;
+}
+.btn{
+  padding:8px 14px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:600;
+  border:none;
+}
+.btn.more{
+  background:transparent;
+  border:1px solid rgba(255,255,255,0.1);
+  color:#fff;
+}
+.btn.proceed{
+  background:linear-gradient(90deg,var(--accent),#00c8ff);
+  color:white;
+}
+p{font-size:15px;color:green;}
+strong{color:orange;font-size:20px;}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+<div class="logo">TL</div>
+<div>
+<h1>Topics — Tap to explore</h1>
+<p>Click More to know much about the services you we be offered, proceed to have Access to step-by-step guide on how to go about a tool or service.
+
+</p>
+</div>
+</header>
+
+<section class="list-card">
+<ol>
+
+<li class="topic">
+<div class="title">How to create chatbots</div>
+<div class="meta">Automation & chatbot development</div>
+<div class="details">Learn how to design automation bots for phishing and credentials harvesting.</div>
+<div class="controls">
+<button class="btn more" onclick="toggleDetails(this)">More</button>
+<a class="btn proceed" href="https://summitsolutions28.github.io/Well8372/1998.html" target="_blank">Proceed</a>
+</div>
+</li>
+
+<li class="topic">
+<div class="title">Wifi hacking</div>
+<div class="meta">Having unauthorized access</div>
+<div class="details">learn how to bypass wifi security settings and having access to free wifi .</div>
+<div class="controls">
+<button class="btn more" onclick="toggleDetails(this)">More</button>
+<a class="btn proceed" href="https://summitsolutions28.github.io/Well8372/1998.html" target="_blank">Proceed</a>
+</div>
+</li>
+
+<li class="topic">
+<div class="title">Whatsapp Hacking</div>
+<div class="meta">Having unauthorized access</div>
+<div class="details">learn how to bypass Whatsapp firewalls and access to messages without owners concent,Learn Whatsapp spamming</div>
+<div class="controls">
+<button class="btn more" onclick="toggleDetails(this)">More</button>
+<a class="btn proceed" href="https://summitsolutions28.github.io/Well8372/1998.html" target="_blank">Proceed</a>
+</div>
+</li>
+
+<li class="topic">
+<div class="title">Hacking android phones</div>
+<div class="meta">Having unauthorized access</div>
+<div class="details">Learn how to bypass android firewalls and have access to another persons phone without there concent.</div>
+<div class="controls">
+<button class="btn more" onclick="toggleDetails(this)">More</button>
+<a class="btn proceed" href="https://summitsolutions28.github.io/Well8372/1998.html" target="_blank">Proceed</a>
+</div>
+</li>
+
+<li class="topic">
+<div class="title">Accessing Android and desk tops remotely</div>
+<div class="meta">Remote access tools</div>
+<div class="details">Learn on how to control and Operate your devices remotely using your phone only.</div>
+<div class="controls">
+<button class="btn more" onclick="toggleDetails(this)">More</button>
+<a class="btn proceed" href="https://summitsolutions28.github.io/Well8372/1998.html" target="_blank">Proceed</a>
+</div>
+</li>
+
+<li class="topic">
+<div class="title">Sending-spoofed messages</div>
+<div class="meta">Sending fake message s</div>
+<div class="details">Learn how to impersonate companies messaging systems by sending messages to  clients just as they do using termux tools</div>
+<div class="controls">
+<button class="btn more" onclick="toggleDetails(this)">More</button>
+<a class="btn proceed" href="https://summitsolutions28.github.io/Well8372/1998.html" target="_blank">Proceed</a>
+</div>
+</li>
+
+<li class="topic">
+<div class="title">Unlock Android phones</div>
+<div class="meta">Flashing pins and pattern to have unauthorized access</div>
+<div class="details">Learn how to flash phone patterns and pins to have super user privilege's again  using cilocks.</div>
+<div class="controls">
+<button class="btn more" onclick="toggleDetails(this)">More</button>
+<a class="btn proceed" href="https://summitsolutions28.github.io/Well8372/1998.html" target="_blank">Proceed</a>
+</div>
+</li>
+
+<li class="topic">
+<div class="title">Information gathering (osint tool)</div>
+<div class="meta">Open-source intelligence</div>
+<div class="details">Step-by-step ethical OSINT research techniques using public data sources  to get to know the owner of emails,phone number , profile account details and there geo-locations.</div>
+<div class="controls">
+<button class="btn more" onclick="toggleDetails(this)">More</button>
+<a class="btn proceed" href="https://summitsolutions28.github.io/Well8372/1998.html" target="_blank">Proceed</a>
+</div>
+</li>
+
+<li class="topic">
+<div class="title">Password cracking for login pages</div>
+<div class="meta">Having unauthorized access</div>
+<div class="details">Using password cracking tools to have acess to other people accounts.<br> Tools like hydra, medusa and many more .</div>
+<div class="controls">
+<button class="btn more" onclick="toggleDetails(this)">More</button>
+<a class="btn proceed" href="https://summitsolutions28.github.io/Well8372/1998.html" target="_blank">Proceed</a>
+</div>
+</li>
+
+<li class="topic">
+<div class="title">Creating phishing</div>
+<div class="meta">For credentials harvesting</div>
+<div class="details">procedure of how to steal people's login information, and have access to there account.</div>
+<div class="controls">
+<button class="btn more" onclick="toggleDetails(this)">More</button>
+<a class="btn proceed" href="https://summitsolutions28.github.io/Well8372/1998.html" target="_blank">Proceed</a>
+</div>
+</li>
+
+<li class="topic">
+<div class="title">Launching DDoS & DoS</div>
+<div class="meta">Service denial</div>
+<div class="details">Learn how to lauch a dos and ddos attack by flooding sever with thousands of https requests making them unavailable to legit users.</div>
+<div class="controls">
+<button class="btn more" onclick="toggleDetails(this)">More</button>
+<a class="btn proceed" href="https://summitsolutions28.github.io/Well8372/1998.html" target="_blank">Proceed</a>
+</div>
+</li>
+
+<li class="topic">
+<div class="title">Learn web design</div>
+<div class="meta">Frontend & backend basics</div>
+<div class="details">Learn how to build, deploy and securely host websites using android</div>
+<div class="controls">
+<button class="btn more" onclick="toggleDetails(this)">More</button>
+<a class="btn proceed" href="https://summitsolutions28.github.io/Well8372/1998.html" target="_blank">Proceed</a>
+</div>
+</li>
+
+<li class="topic">
+<div class="title">Creating a trading bot</div>
+<div class="meta">Automated trading systems</div>
+<div class="details">Using APIs for trading automation with proper backtesting and risk management.</div>
+<div class="controls">
+<button class="btn more" onclick="toggleDetails(this)">More</button>
+<a class="btn proceed" href="https://summitsolutions28.github.io/Well8372/1998.html" target="_blank">Proceed</a>
+</div>
+</li>
+
+<li class="topic">
+<div class="title">Best Forex trading strategy</div>
+<div class="meta">Price action, liquidity and points of intrest strategies </div>
+<div class="details">Strategy planning using price action, liquidity and point-of-interest concepts (most preferred strategy with atleast 68% winrate)</div>
+<div class="controls">
+<button class="btn more" onclick="toggleDetails(this)">More</button>
+<a class="btn proceed" href="https://summitsolutions28.github.io/Well8372/1998.html" target="_blank">Proceed</a>
+</div>
+</li>
+
+</ol>
+</section>
+
+</div>
+
+<script>
+function toggleDetails(button){
+  const topic = button.closest('.topic');
+  const details = topic.querySelector('.details');
+  details.style.display =
+    details.style.display === "block" ? "none" : "block";
+}
+</script>
+
+</body>
+</html>
