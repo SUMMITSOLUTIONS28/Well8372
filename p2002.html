@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Peter Wafula Simiyu | Professional Profile</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* RESET & FONT */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    scroll-behavior: smooth;
+}
+
+body {
+    background: linear-gradient(135deg, #e0f7fa, #ffffff);
+    color: #111;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* CONTAINER */
+.container {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 20px;
+}
+
+/* PROFILE CARD */
+.profile-card {
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.profile-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+}
+
+/* PROFILE IMAGE */
+.profile-image img {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid #0a66c2;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-image img:hover {
+    transform: scale(1.1);
+    box-shadow: 0 15px 35px rgba(10,102,194,0.5);
+}
+
+/* PROFILE DETAILS */
+.profile-details h1 {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #0a66c2;
+    margin-bottom: 10px;
+}
+
+.profession-list {
+    margin-top: 10px;
+    line-height: 2;
+    font-weight: 500;
+    color: #333;
+    font-size: 15px;
+}
+
+/* PAYMENT SECTION */
+.payment-section {
+    margin-top: 40px;
+}
+
+.section-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    color: #0a66c2;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 3px;
+    background: #0a66c2;
+    border-radius: 3px;
+    margin-top: 5px;
+}
+
+/* PAYMENT GRID */
+.payment-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.payment-card {
+    background: rgba(255,255,255,0.8);
+    backdrop-filter: blur(12px);
+    padding: 22px;
+    border-radius: 15px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-left 0.3s ease;
+    border-left: 5px solid #0a66c2;
+}
+
+.payment-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    border-left: 5px solid #ff4081;
+}
+
+.payment-card h3 {
+    margin-bottom: 10px;
+    font-size: 15px;
+    color: #0a66c2;
+}
+
+.payment-card p {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111;
+}
+
+/* FOOTER */
+.footer {
+    margin-top: 50px;
+    text-align: center;
+    font-size: 14px;
+    color: #555;
+    opacity: 0.8;
+}
+
+/* MODAL / LIGHTBOX */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.95);
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+    margin: auto;
+    display: block;
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 15px;
+    animation: zoomIn 0.3s ease;
+}
+
+.modal-close {
+    position: absolute;
+    top: 25px;
+    right: 40px;
+    color: #fff;
+    font-size: 45px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.modal-close:hover {
+    transform: rotate(90deg);
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes zoomIn {
+    from {transform: scale(0.7);}
+    to {transform: scale(1);}
+}
+
+@media screen and (max-width: 750px) {
+    .profile-card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .profile-image img {
+        width: 140px;
+        height: 140px;
+    }
+}
+strong{color:orange;}
+</style>
+</head>
+<body>
+
+<div class="container">
+ <!-- PROFILE SECTION -->
+    <div class="profile-card">
+        <div class="profile-image">
+        </div>
+        <div class="profile-details">
+        <div class="profession-list">
+    
+    
+   <strong>Important Notice to All Survey Kenya Users<br><br>
+Hello and welcome to Survey Kenya.
+I would like to inform you that I am the Treasurer of Survey Kenya. I am personally responsible for verifying all payment confirmations for account activation.
+After making your activation payment, your payment details will be reviewed and confirmed before your account is approved. Please ensure that you submit accurate payment information to avoid delays.
+Thank you for your cooperation.<br>
+— Peter Wafula<br>
+Treasurer, Survey Kenya</strong>
+     </div>
+        </div>
+    </div>
+
+    <!-- PAYMENT SECTION -->
+    <div class="payment-section">
+        <div class="section-title">Payment Information</div>
+        <div class="payment-grid">
+        <div class="payment-card">
+                <h3>Till Number (Buy Goods)</h3>
+                <p>9273195</p>
+            </div>
+            <div class="payment-card">
+                <h3>Paybill Number</h3>
+                <p>522522</p>
+            </div>
+            <div class="payment-card">
+                <h3>Account Number</h3>
+                <p>1318040353</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        © 2026 Peter Wafula Simiyu | All Rights Reserved
+    </div>
+
+</div>
+
+<!-- MODAL -->
+<div id="imgModal" class="modal">
+    <span class="modal-close">&times;</span>
+    <img class="modal-content" id="modalImg">
+</div>
+
+<script>
+// Modal JS
+var modal = document.getElementById("imgModal");
+var img = document.getElementById("profileImg");
+var modalImg = document.getElementById("modalImg");
+var closeBtn = document.getElementsByClassName("modal-close")[0];
+
+img.onclick = function(){
+    modal.style.display = "block";
+    modalImg.src = this.src;
+}
+
+closeBtn.onclick = function(){
+    modal.style.display = "none";
+}
+
+modal.onclick = function(e){
+    if(e.target == modal){
+        modal.style.display = "none";
+    }
+}
+</script>
+
+</body>
+</html>

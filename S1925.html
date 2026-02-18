@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Transport & Infrastructure Survey | Peter Simiyu 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif;}
+body{background: linear-gradient(to right, #ff9966, #ff5e62); color:#fff; min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; padding:20px;}
+.container{background: rgba(0,0,0,0.3); padding:25px; border-radius:20px; max-width:900px; width:100%; margin-top:30px; box-shadow:0 10px 25px rgba(0,0,0,0.3);}
+h1{color:#ffd700; text-align:center; margin-bottom:20px; text-shadow:1px 1px 5px #000;}
+.question{background: rgba(255,255,255,0.1); padding:15px; margin-bottom:15px; border-radius:12px;}
+button{margin:5px 0; padding:10px 15px; border:none; border-radius:10px; cursor:pointer; width:100%; font-weight:600; transition:0.3s;}
+button:hover{transform:scale(1.03);}
+#balance{margin-top:10px; font-size:1.1rem; font-weight:600;}
+#withdrawBtn{margin-top:15px; background:#ffeb3b; color:#000; font-weight:700;}
+</style>
+</head>
+<body>
+
+<div class="container">
+<h1>Transport & Infrastructure Survey</h1>
+<div id="survey-container"></div>
+<div id="balance">Your balance: Ksh 0</div>
+<button id="withdrawBtn">Withdraw</button>
+<p style="margin-top:10px;font-size:0.9rem;">© Peter Simiyu 2026. All rights reserved.</p>
+</div>
+
+<script>
+const questions = [
+    // 15 transport & infrastructure-themed questions
+    {q:"Which mode of transport is fastest over long distances?", a:["Car","Train","Airplane","Ship"], correct:2},
+    {q:"Which type of road is designed for high-speed traffic with no intersections?", a:["Highway","Street","Alley","Lane"], correct:0},
+    {q:"Which infrastructure supports trains?", a:["Runway","Track","Dock","Bridge"], correct:1},
+    {q:"What is a common material used in road construction?", a:["Asphalt","Wood","Brick","Glass"], correct:0},
+    {q:"Which bridge type uses cables to support its deck?", a:["Beam Bridge","Suspension Bridge","Arch Bridge","Cantilever Bridge"], correct:1},
+    {q:"Which vehicle is used for transporting goods over water?", a:["Train","Truck","Ship","Airplane"], correct:2},
+    {q:"Which airport component is used for takeoff and landing?", a:["Terminal","Runway","Hangar","Control Tower"], correct:1},
+    {q:"Which is a renewable transport fuel?", a:["Diesel","Petrol","Electricity","Coal"], correct:2},
+    {q:"Which urban transport is usually underground?", a:["Bus","Metro/Subway","Tram","Taxi"], correct:1},
+    {q:"Which infrastructure is vital for electricity distribution?", a:["Bridge","Power Line","Road","Tunnel"], correct:1},
+    {q:"Which transport reduces road congestion in cities?", a:["Private Cars","Metro Rail","Bicycles","Motorbikes"], correct:1},
+    {q:"What is a container port mainly used for?", a:["Passenger travel","Goods handling","Fishing","Tourism"], correct:1},
+    {q:"Which is the primary function of traffic lights?", a:["Decor","Control traffic flow","Increase speed","Provide electricity"], correct:1},
+    {q:"Which type of bridge can rotate to allow ships to pass?", a:["Suspension Bridge","Drawbridge","Beam Bridge","Arch Bridge"], correct:1},
+    {q:"Which vehicle is used on rails but smaller than trains?", a:["Tram","Bus","Truck","Airplane"], correct:0}
+];
+
+let db;
+let balance = 0;
+let answeredToday = 0;
+
+// Time restriction
+const now = new Date();
+const hour = now.getHours();
+if(hour < 19 || hour >= 22){
+    document.body.innerHTML = "<h2 style='text-align:center;margin-top:50px;'>Survey is available only from 7:00 PM to 10:00 PM</h2>";
+    throw new Error("Outside allowed time");
+}
+
+// IndexedDB setup
+const request = indexedDB.open("TransportSurveyDB",1);
+request.onupgradeneeded = (e)=>{
+    db = e.target.result;
+    db.createObjectStore("progress",{keyPath:"id"});
+};
+request.onsuccess = (e)=>{
+    db = e.target.result;
+    loadProgress();
+};
+request.onerror = (e)=>console.log("DB error", e);
+
+function loadProgress(){
+    const tx = db.transaction("progress","readonly");
+    const store = tx.objectStore("progress");
+    const getReq = store.get("user1");
+    getReq.onsuccess = ()=>{
+        const data = getReq.result;
+        if(data){
+            balance = data.balance;
+            answeredToday = (data.lastDate===new Date().toDateString()) ? data.answeredToday : 0;
+            startSurvey(data.lastQuestionIndex||0);
+        } else {
+            startSurvey(0);
+        }
+        updateBalance();
+    };
+}
+
+function saveProgress(lastQuestionIndex){
+    const tx = db.transaction("progress","readwrite");
+    const store = tx.objectStore("progress");
+    store.put({
+        id:"user1",
+        balance,
+        lastQuestionIndex,
+        lastDate:new Date().toDateString(),
+        answeredToday
+    });
+}
+
+function updateBalance(){
+    document.getElementById("balance").innerText = "Your balance: Ksh "+balance;
+}
+
+function startSurvey(startIndex){
+    let qIndex = startIndex;
+    const container = document.getElementById("survey-container");
+    container.innerHTML = "";
+
+    function showQuestion(){
+        if(qIndex>=questions.length || answeredToday>=3){
+            container.innerHTML="<h3>Survey completed for today!</h3>";
+            return;
+        }
+        const q = questions[qIndex];
+        container.innerHTML = `<div class="question">
+            <p>${q.q}</p>
+            ${q.a.map((opt,i)=>`<button onclick="answer(${i})">${opt}</button>`).join("")}
+        </div>`;
+    }
+
+    window.answer = function(choice){
+        const q = questions[qIndex];
+        answeredToday++;
+        if(choice===q.correct){
+            balance+=40;
+        } else {
+            balance-=20;
+            updateBalance();
+            saveProgress(qIndex+1);
+            container.innerHTML="<h3>You answered wrong! Survey stops for today. Come back tomorrow.</h3>";
+            return;
+        }
+        updateBalance();
+        qIndex++;
+        saveProgress(qIndex);
+        if(answeredToday>=3){
+            container.innerHTML="<h3>Daily question limit reached!</h3>";
+            return;
+        }
+        showQuestion();
+    }
+
+    showQuestion();
+}
+
+// Withdraw button
+document.getElementById("withdrawBtn").onclick = ()=>{
+    if(balance>=150){
+        const confirmActivate = confirm("Activate your account with Ksh 36 to withdraw?");
+        if(confirmActivate){
+            window.location.href="https://summitsolutions28.github.io/Well8372/p2003.html";
+        }
+    } else {
+        alert("Minimum balance to withdraw is Ksh 150.");
+    }
+}
+</script>
+
+</body>
+</html>

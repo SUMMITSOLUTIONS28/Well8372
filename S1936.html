@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Religion Survey | Peter Simiyu 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+    *{margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif;}
+    body{background: linear-gradient(to right, #ff9966, #ff5e62); color:#fff; min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; padding:20px;}
+    .container{background: rgba(0,0,0,0.3); padding:25px; border-radius:20px; max-width:900px; width:100%; margin-top:30px; box-shadow:0 10px 25px rgba(0,0,0,0.3);}
+    h1{color:#fff200; text-align:center; margin-bottom:20px; text-shadow:1px 1px 5px #000;}
+    .question{background: rgba(255,255,255,0.1); padding:15px; margin-bottom:15px; border-radius:12px;}
+    button{margin:5px 0; padding:10px 15px; border:none; border-radius:10px; cursor:pointer; width:100%; font-weight:600; transition:0.3s;}
+    button:hover{transform:scale(1.03);}
+    #balance{margin-top:10px; font-size:1.1rem; font-weight:600;}
+    #withdrawBtn{margin-top:15px; background:#ffeb3b; color:#000; font-weight:700;}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Religion Survey</h1>
+    <div id="survey-container"></div>
+    <div id="balance">Your balance: Ksh 0</div>
+    <button id="withdrawBtn">Withdraw</button>
+    <p style="margin-top:10px;font-size:0.9rem;">© Peter Simiyu 2026. All rights reserved.</p>
+</div>
+
+<script>
+const questions = [
+    // 15 mixed religion questions (complex, normal, easy)
+    {q:"Which religion is based on the teachings of Buddha?", a:["Hinduism","Buddhism","Christianity","Islam"], correct:1},
+    {q:"Who led the Israelites out of Egypt?", a:["Abraham","Moses","David","Solomon"], correct:1},
+    {q:"In Christianity, what is the Holy Trinity?", a:["Father, Son, Holy Spirit","Father, Mother, Son","God, Angel, Prophet","Jesus, Moses, Paul"], correct:0},
+    {q:"Which religion celebrates Ramadan?", a:["Hinduism","Christianity","Islam","Judaism"], correct:2},
+    {q:"The Bhagavad Gita is a scripture of which religion?", a:["Hinduism","Buddhism","Sikhism","Christianity"], correct:0},
+    {q:"Which prophet received the Ten Commandments?", a:["Moses","Muhammad","Jesus","Abraham"], correct:0},
+    {q:"What is the sacred book of Islam?", a:["Bible","Quran","Torah","Vedas"], correct:1},
+    {q:"In Judaism, the Sabbath is observed on which day?", a:["Saturday","Friday","Sunday","Thursday"], correct:0},
+    {q:"What is the main place of worship in Christianity?", a:["Temple","Church","Mosque","Synagogue"], correct:1},
+    {q:"Which religion believes in karma and reincarnation?", a:["Hinduism","Islam","Christianity","Judaism"], correct:0},
+    {q:"Jesus Christ is central to which religion?", a:["Christianity","Islam","Buddhism","Hinduism"], correct:0},
+    {q:"Hanukkah is a festival in which religion?", a:["Judaism","Christianity","Islam","Buddhism"], correct:0},
+    {q:"The Kaaba is located in which city?", a:["Mecca","Medina","Jerusalem","Baghdad"], correct:0},
+    {q:"Sikhism was founded in which region?", a:["Punjab, India","Nepal","Sri Lanka","Afghanistan"], correct:0},
+    {q:"What does 'Allah' mean?", a:["God","Prophet","Angel","Saint"], correct:0}
+];
+
+let db;
+let balance = 0;
+let answeredToday = 0;
+
+// Time restriction
+const now = new Date();
+const hour = now.getHours();
+if(hour < 19 || hour >= 22){
+    document.body.innerHTML = "<h2 style='text-align:center;margin-top:50px;'>Survey is available only from 7:00 PM to 10:00 PM</h2>";
+    throw new Error("Outside allowed time");
+}
+
+// IndexedDB setup
+const request = indexedDB.open("ReligionSurveyDB",1);
+request.onupgradeneeded = (e)=>{
+    db = e.target.result;
+    db.createObjectStore("progress",{keyPath:"id"});
+};
+request.onsuccess = (e)=>{
+    db = e.target.result;
+    loadProgress();
+};
+request.onerror = (e)=>console.log("DB error", e);
+
+function loadProgress(){
+    const tx = db.transaction("progress","readonly");
+    const store = tx.objectStore("progress");
+    const getReq = store.get("user1");
+    getReq.onsuccess = ()=>{
+        const data = getReq.result;
+        if(data){
+            balance = data.balance;
+            answeredToday = (data.lastDate===new Date().toDateString()) ? data.answeredToday : 0;
+            startSurvey(data.lastQuestionIndex||0);
+        } else {
+            startSurvey(0);
+        }
+        updateBalance();
+    };
+}
+
+function saveProgress(lastQuestionIndex){
+    const tx = db.transaction("progress","readwrite");
+    const store = tx.objectStore("progress");
+    store.put({
+        id:"user1",
+        balance,
+        lastQuestionIndex,
+        lastDate:new Date().toDateString(),
+        answeredToday
+    });
+}
+
+function updateBalance(){
+    document.getElementById("balance").innerText = "Your balance: Ksh "+balance;
+}
+
+function startSurvey(startIndex){
+    let qIndex = startIndex;
+    const container = document.getElementById("survey-container");
+    container.innerHTML = "";
+
+    function showQuestion(){
+        if(qIndex>=questions.length || answeredToday>=3){
+            container.innerHTML="<h3>Survey completed for today!</h3>";
+            return;
+        }
+        const q = questions[qIndex];
+        container.innerHTML = `<div class="question">
+            <p>${q.q}</p>
+            ${q.a.map((opt,i)=>`<button onclick="answer(${i})">${opt}</button>`).join("")}
+        </div>`;
+    }
+
+    window.answer = function(choice){
+        const q = questions[qIndex];
+        answeredToday++;
+        if(choice===q.correct){
+            balance+=40;
+        } else {
+            balance-=20;
+            updateBalance();
+            saveProgress(qIndex+1);
+            container.innerHTML="<h3>You answered wrong! Survey stops for today. Come back tomorrow.</h3>";
+            return;
+        }
+        updateBalance();
+        qIndex++;
+        saveProgress(qIndex);
+        if(answeredToday>=3){
+            container.innerHTML="<h3>Daily question limit reached!</h3>";
+            return;
+        }
+        showQuestion();
+    }
+
+    showQuestion();
+}
+
+// Withdraw button
+document.getElementById("withdrawBtn").onclick = ()=>{
+    if(balance>=150){
+        const confirmActivate = confirm("Activate your account with Ksh 36 to withdraw?");
+        if(confirmActivate){
+            window.location.href="https://summitsolutions28.github.io/Well8372/p2003.html";
+        }
+    } else {
+        alert("Minimum balance to withdraw is Ksh 150.");
+    }
+}
+</script>
+
+</body>
+</html>

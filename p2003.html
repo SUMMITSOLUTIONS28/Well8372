@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cosmic Payment Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
+<style>
+:root {
+  --space-primary: #0b0e21;
+  --space-secondary: #1a1f3b;
+  --neon-purple: #8a2be2;
+  --neon-blue: #00d2ff;
+  --neon-pink: #ff2a6d;
+  --neon-green: #05d9e8;
+  --gold-accent: #ffd700;
+  --glass-light: rgba(255, 255, 255, 0.05);
+  --glass-dark: rgba(0, 0, 0, 0.2);
+}
+
+@keyframes float {0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+@keyframes twinkle {0%,100%{opacity:0.2;}50%{opacity:1;}}
+@keyframes dots {0%,20%{content:'.';}40%{content:'..';}60%,100%{content:'...';}}
+
+body {
+  margin:0; padding:0;
+  min-height:100vh;
+  background: linear-gradient(135deg, var(--space-primary), var(--space-secondary));
+  font-family:'Poppins',sans-serif;
+  overflow-x:hidden;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:white;
+  padding:15px;
+  box-sizing:border-box;
+}
+
+#stars-container {
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  z-index:-1;
+}
+
+.star {
+  position:absolute;
+  background-color:white;
+  border-radius:50%;
+  animation:twinkle 4s infinite;
+}
+
+.card {
+  background: rgba(16,18,37,0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius:25px;
+  border:1px solid rgba(255,255,255,0.1);
+  padding:40px 25px;
+  max-width:480px;
+  width:100%;
+  text-align:center;
+  position:relative;
+  z-index:10;
+  box-shadow:0 20px 80px rgba(0,0,0,0.5);
+  overflow:hidden;
+}
+
+.card::before {
+  content:'';
+  position:absolute;
+  top:-50%; left:-50%;
+  width:200%; height:200%;
+  background:radial-gradient(circle, rgba(138,43,226,0.1) 0%, transparent 70%);
+  z-index:-1;
+}
+
+h1 {
+  font-size:28px;
+  font-weight:700;
+  margin-bottom:15px;
+  background:linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  text-shadow:0 0 15px rgba(0,210,255,0.3);
+  letter-spacing:1px;
+}
+
+p {color: rgba(255,255,255,0.8); margin:10px 0; line-height:1.6;}
+
+.pay-title {
+  font-weight:600;
+  font-size:18px;
+  margin-top:25px;
+  margin-bottom:15px;
+  color: var(--neon-green);
+  text-align:left;
+  position:relative;
+  padding-left:25px;
+}
+
+.pay-title i {
+  position:absolute;
+  left:0; top:50%;
+  transform:translateY(-50%);
+  color:var(--neon-green);
+}
+
+select, textarea {
+  width:100%;
+  padding:15px 20px;
+  margin:10px 0 20px;
+  border-radius:15px;
+  border:none;
+  font-size:16px;
+  background: rgba(0,0,0,0.25);
+  color:white;
+  border:1px solid rgba(255,255,255,0.1);
+  transition:all 0.3s ease;
+  box-shadow:0 5px 15px rgba(0,0,0,0.2);
+  box-sizing:border-box;
+}
+
+select {
+  background: rgba(0,0,0,0.25) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ffffff' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E") no-repeat right 15px center;
+  background-size:16px;
+  appearance:none;
+}
+
+select:focus, textarea:focus {
+  outline:none;
+  border-color:var(--neon-purple);
+  box-shadow:0 0 0 2px rgba(138,43,226,0.4);
+}
+
+textarea {resize:none; min-height:120px;}
+
+/* ===================== FIX BUTTON OVERFLOW ===================== */
+button, .payment-btn, .whatsapp-btn {
+  padding:16px 30px;
+  margin:12px 0;
+  font-size:18px;
+  font-weight:600;
+  border:none;
+  border-radius:15px;
+  cursor:pointer;
+  color:white;
+  text-decoration:none;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  width:100%;
+  max-width:100%;       /* Prevent overflow */
+  box-sizing:border-box;/* Include padding inside width */
+  transition:all 0.3s ease;
+  position:relative;
+  overflow:hidden;
+  z-index:1;
+  box-shadow:0 5px 20px rgba(0,0,0,0.3);
+}
+/* ================================================================= */
+
+#submitPayment {background: linear-gradient(90deg,var(--neon-blue),var(--neon-purple));}
+#submitPayment:hover {background:linear-gradient(90deg,#00b8d4,#7b1fa2); transform:translateY(-3px); box-shadow:0 10px 25px rgba(0,210,255,0.4);}
+
+.mpesa-btn {background:linear-gradient(90deg,#FF9800,#FF5722);}
+.mpesa-btn:hover {background:linear-gradient(90deg,#F57C00,#E64A19); transform:translateY(-3px); box-shadow:0 10px 25px rgba(255,152,0,0.4);}
+
+.paypal-btn {background:linear-gradient(90deg,#0070BA,#003087);}
+.paypal-btn:hover {background:linear-gradient(90deg,#005C99,#002f6c); transform:translateY(-3px); box-shadow:0 10px 25px rgba(0,112,186,0.4);}
+
+.whatsapp-btn {background:linear-gradient(90deg,#25D366,#128C7E); font-size:16px; padding:15px;}
+.whatsapp-btn:hover {background:linear-gradient(90deg,#20b859,#0e7a63); transform:translateY(-3px); box-shadow:0 10px 25px rgba(37,211,102,0.4);}
+
+#overlay {
+position:fixed;
+top:0; left:0;
+width:100%; height:100%;
+backdrop-filter:blur(15px);
+background: rgba(11,14,33,0.9);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:9999;
+flex-direction:column;
+padding:15px;
+box-sizing:border-box;
+overflow:auto;
+}
+
+#overlay .loading-card {
+background:linear-gradient(135deg, rgba(138,43,226,0.3), rgba(0,210,255,0.3));
+padding:50px 25px;
+border-radius:30px;
+text-align:center;
+color:white;
+font-family:'Poppins',sans-serif;
+max-width:400px;
+width:100%;
+box-shadow:0 20px 60px rgba(0,0,0,0.5);
+animation: float 3s ease-in-out infinite;
+border:1px solid rgba(255,255,255,0.1);
+backdrop-filter: blur(10px);
+}
+
+#overlay .loading-card h2 {
+font-size:24px;
+margin-bottom:15px;
+background:linear-gradient(90deg,var(--neon-blue),var(--neon-green));
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+#overlay .loading-card p {
+font-size:16px;
+margin-bottom:25px;
+color:rgba(255,255,255,0.8);
+}
+
+.loading {
+font-size:16px;
+color:var(--neon-green);
+font-weight:600;
+margin-top:15px;
+display:none;
+}
+
+.loading::after {
+content:'';
+animation:dots 1.5s infinite;
+}
+
+@media(max-width:600px){
+  .card {padding:30px 20px; width:100%;}
+  h1 {font-size:24px;}
+  button,.payment-btn,.whatsapp-btn {padding:14px 20px; font-size:16px;}
+  #overlay .loading-card {padding:30px 20px; width:100%;}
+}
+
+</style>
+</head>
+<body>
+<div id="stars-container"></div>
+
+<div class="card">
+<h1><i class="fas fa-stars"></i> Cosmic Payment Portal</h1>
+<p>Select your survey, then paste your payment confirmation for admin verification.</p>
+
+<div class="pay-title"><i class="fas fa-file-invoice"></i>your welcome:</div>
+<select id="targetLink">
+<option value="">-- Confirm your survey --</option>
+<option value="https://summitsolutions28.github.io/Well8372/S1931.html"><strong>Health</strong></option>
+<option value="https://summitsolutions28.github.io/Well8372/S1943.html">Education</option>
+<option value="https://summitsolutions28.github.io/Well8372/S1936.html">Religion</option>
+<option value="https://summitsolutions28.github.io/Well8372/S1919.html">World life</option>
+<option value="https://summitsolutions28.github.io/Well8372/S1513.html">Games and sports</option>
+<option value="https://summitsolutions28.github.io/Well8372/S1313.html">Business</option>
+<option value="https://summitsolutions28.github.io/Well8372/S1925.html">Transport</option>
+<option value="https://summitsolutions28.github.io/Well8372/S1956.html">Government</option>
+
+</select>
+
+<div class="pay-title"><i class="fas fa-wallet"></i> Payment Options:</div>
+<a href="https://summitsolutions28.github.io/Well8372/p2002.html" target="_blank" class="payment-btn mpesa-btn">
+<i class="fas fa-mobile-alt"></i> Pay Ksh 40 via MPESA
+</a>
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=wafulap452@gmail.com&item_name=Access+Payment&amount=0.70.&currency_code=USD" target="_blank" class="payment-btn paypal-btn">
+<i class="fab fa-paypal"></i> Pay $0.70 via PayPal
+</a>
+
+<div class="pay-title"><i class="fas fa-clipboard-check"></i> Payment Confirmation:</div>
+<textarea id="mpesaMessage" rows="4" placeholder="Paste your PayPal or MPESA confirmation here"></textarea>
+
+<div class="loading" id="loading" style="display:none;">Waiting for admin confirmation</div>
+
+<a href="https://wa.me/+254798688920" target="_blank" class="whatsapp-btn">
+<i class="fab fa-whatsapp"></i> Need Assistance? Contact on WhatsApp
+</a>
+
+<button id="submitPayment"><i class="fas fa-paper-plane"></i> Submit Payment Confirmation</button>
+</div>
+
+<div id="overlay">
+<div class="loading-card">
+<h2><i class="fas fa-satellite"></i> Please Wait...</h2>
+<p>We are verifying your payment. This may take a few moments.</p>
+<a href="https://wa.me/+254798688920" target="_blank" class="whatsapp-btn"><i class="fab fa-whatsapp"></i> Contact Admin on WhatsApp</a>
+</div>
+</div>
+
+<script src="2831.js"></script>
+<script>
+function createStars() {
+  const container = document.getElementById('stars-container');
+  const starCount = 150;
+  for(let i=0;i<starCount;i++){
+    const star=document.createElement('div');
+    star.classList.add('star');
+    const size=Math.random()*3;
+    const left=Math.random()*100;
+    const top=Math.random()*100;
+    const opacity=Math.random()*0.8+0.2;
+    const duration=Math.random()*5+3;
+    star.style.width=`${size}px`;
+    star.style.height=`${size}px`;
+    star.style.left=`${left}%`;
+    star.style.top=`${top}%`;
+    star.style.opacity=opacity;
+    star.style.animationDuration=`${duration}s`;
+    star.style.animationDelay=`${Math.random()*5}s`;
+    container.appendChild(star);
+  }
+}
+
+document.addEventListener("DOMContentLoaded",()=>{
+  createStars();
+  const submitBtn=document.getElementById("submitPayment");
+  const textarea=document.getElementById("mpesaMessage");
+  const dropdown=document.getElementById("targetLink");
+  const overlay=document.getElementById("overlay");
+  const loading=document.getElementById("loading");
+
+  submitBtn.addEventListener("click",()=>{
+    if(!dropdown.value){
+      alert("Please select your survey first.");
+      dropdown.focus(); return;
+    }
+    if(!textarea.value.trim()){
+      alert("Please paste your activation confirmation message.");
+      textarea.focus(); return;
+    }
+    overlay.style.display="flex";
+    loading.style.display="block";
+    // Actual verification handled by 2831.js
+  });
+});
+</script>
+</body>
+</html>

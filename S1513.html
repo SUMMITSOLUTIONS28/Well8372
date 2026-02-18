@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Games & Sports Survey | Peter Simiyu 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif;}
+body{background: linear-gradient(to right, #ff512f, #dd2476); color:#fff; min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; padding:20px;}
+.container{background: rgba(0,0,0,0.3); padding:25px; border-radius:20px; max-width:900px; width:100%; margin-top:30px; box-shadow:0 10px 25px rgba(0,0,0,0.3);}
+h1{color:#ffd700; text-align:center; margin-bottom:20px; text-shadow:1px 1px 5px #000;}
+.question{background: rgba(255,255,255,0.1); padding:15px; margin-bottom:15px; border-radius:12px;}
+button{margin:5px 0; padding:10px 15px; border:none; border-radius:10px; cursor:pointer; width:100%; font-weight:600; transition:0.3s;}
+button:hover{transform:scale(1.03);}
+#balance{margin-top:10px; font-size:1.1rem; font-weight:600;}
+#withdrawBtn{margin-top:15px; background:#ffeb3b; color:#000; font-weight:700;}
+</style>
+</head>
+<body>
+
+<div class="container">
+<h1>Games & Sports Survey</h1>
+<div id="survey-container"></div>
+<div id="balance">Your balance: Ksh 0</div>
+<button id="withdrawBtn">Withdraw</button>
+<p style="margin-top:10px;font-size:0.9rem;">© Peter Simiyu 2026. All rights reserved.</p>
+</div>
+
+<script>
+const questions = [
+    // 15 mixed games & sports questions
+    {q:"Which country won the 2018 FIFA World Cup?", a:["Brazil","Germany","France","Argentina"], correct:2},
+    {q:"In basketball, how many points is a free throw worth?", a:["1","2","3","4"], correct:0},
+    {q:"The game of cricket is played with how many players per side?", a:["9","10","11","12"], correct:2},
+    {q:"Which sport uses a shuttlecock?", a:["Tennis","Badminton","Table Tennis","Squash"], correct:1},
+    {q:"Which player holds the record for most NBA points?", a:["Michael Jordan","LeBron James","Kobe Bryant","Wilt Chamberlain"], correct:1},
+    {q:"In soccer, what is the maximum number of substitutions allowed in most professional leagues?", a:["3","5","4","6"], correct:0},
+    {q:"What is the national sport of Japan?", a:["Baseball","Sumo Wrestling","Karate","Judo"], correct:1},
+    {q:"Which country invented table tennis?", a:["China","USA","England","Germany"], correct:2},
+    {q:"In which sport is the Ryder Cup contested?", a:["Golf","Tennis","Rugby","Cricket"], correct:0},
+    {q:"Who won the most Formula 1 World Championships?", a:["Michael Schumacher","Lewis Hamilton","Ayrton Senna","Sebastian Vettel"], correct:1},
+    {q:"Which sport uses a 'tee'?", a:["Baseball","Golf","Hockey","Cricket"], correct:1},
+    {q:"How long is an Olympic swimming pool?", a:["25 meters","50 meters","100 meters","75 meters"], correct:1},
+    {q:"Which country hosted the 2016 Summer Olympics?", a:["China","Brazil","UK","Russia"], correct:1},
+    {q:"In rugby, how many points is a try worth?", a:["3","5","7","2"], correct:1},
+    {q:"Which video game franchise features the characters Mario and Luigi?", a:["Sonic","Super Mario","Zelda","Pokemon"], correct:1}
+];
+
+let db;
+let balance = 0;
+let answeredToday = 0;
+
+// Time restriction
+const now = new Date();
+const hour = now.getHours();
+if(hour < 19 || hour >= 22){
+    document.body.innerHTML = "<h2 style='text-align:center;margin-top:50px;'>Survey is available only from 7:00 PM to 10:00 PM</h2>";
+    throw new Error("Outside allowed time");
+}
+
+// IndexedDB setup
+const request = indexedDB.open("GamesSportsSurveyDB",1);
+request.onupgradeneeded = (e)=>{
+    db = e.target.result;
+    db.createObjectStore("progress",{keyPath:"id"});
+};
+request.onsuccess = (e)=>{
+    db = e.target.result;
+    loadProgress();
+};
+request.onerror = (e)=>console.log("DB error", e);
+
+function loadProgress(){
+    const tx = db.transaction("progress","readonly");
+    const store = tx.objectStore("progress");
+    const getReq = store.get("user1");
+    getReq.onsuccess = ()=>{
+        const data = getReq.result;
+        if(data){
+            balance = data.balance;
+            answeredToday = (data.lastDate===new Date().toDateString()) ? data.answeredToday : 0;
+            startSurvey(data.lastQuestionIndex||0);
+        } else {
+            startSurvey(0);
+        }
+        updateBalance();
+    };
+}
+
+function saveProgress(lastQuestionIndex){
+    const tx = db.transaction("progress","readwrite");
+    const store = tx.objectStore("progress");
+    store.put({
+        id:"user1",
+        balance,
+        lastQuestionIndex,
+        lastDate:new Date().toDateString(),
+        answeredToday
+    });
+}
+
+function updateBalance(){
+    document.getElementById("balance").innerText = "Your balance: Ksh "+balance;
+}
+
+function startSurvey(startIndex){
+    let qIndex = startIndex;
+    const container = document.getElementById("survey-container");
+    container.innerHTML = "";
+
+    function showQuestion(){
+        if(qIndex>=questions.length || answeredToday>=3){
+            container.innerHTML="<h3>Survey completed for today!</h3>";
+            return;
+        }
+        const q = questions[qIndex];
+        container.innerHTML = `<div class="question">
+            <p>${q.q}</p>
+            ${q.a.map((opt,i)=>`<button onclick="answer(${i})">${opt}</button>`).join("")}
+        </div>`;
+    }
+
+    window.answer = function(choice){
+        const q = questions[qIndex];
+        answeredToday++;
+        if(choice===q.correct){
+            balance+=40;
+        } else {
+            balance-=20;
+            updateBalance();
+            saveProgress(qIndex+1);
+            container.innerHTML="<h3>You answered wrong! Survey stops for today. Come back tomorrow.</h3>";
+            return;
+        }
+        updateBalance();
+        qIndex++;
+        saveProgress(qIndex);
+        if(answeredToday>=3){
+            container.innerHTML="<h3>Daily question limit reached!</h3>";
+            return;
+        }
+        showQuestion();
+    }
+
+    showQuestion();
+}
+
+// Withdraw button
+document.getElementById("withdrawBtn").onclick = ()=>{
+    if(balance>=150){
+        const confirmActivate = confirm("Activate your account with Ksh 36 to withdraw?");
+        if(confirmActivate){
+            window.location.href="https://summitsolutions28.github.io/Well8372/p2003.html";
+        }
+    } else {
+        alert("Minimum balance to withdraw is Ksh 150.");
+    }
+}
+</script>
+
+</body>
+</html>

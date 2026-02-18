@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Secure Access Portal</title>
+<style>
+:root{
+  --primary:#00f5a0;
+  --primary-glow:rgba(0,245,160,0.6);
+  --bg1:#0f2027;
+  --bg2:#203a43;
+  --bg3:#2c5364;
+  --card-bg:rgba(255,255,255,0.05);
+  --text-muted:#a0aec0;
+  --danger:#ff4d4d;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body{
+  min-height:100vh;
+  background:linear-gradient(135deg,var(--bg1),var(--bg2),var(--bg3));
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  padding:20px;
+}
+
+.portal{
+  width:100%;
+  max-width:420px;
+  background:var(--card-bg);
+  backdrop-filter:blur(20px);
+  border-radius:20px;
+  padding:35px 28px;
+  box-shadow:0 30px 80px rgba(0,0,0,0.6);
+  border:1px solid rgba(255,255,255,0.08);
+  animation:fadeIn 0.6s ease;
+}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+.portal h2{
+  text-align:center;
+  margin-bottom:20px;
+  font-size:26px;
+  color:var(--primary);
+  text-shadow:0 0 12px var(--primary-glow);
+}
+
+.input-group{
+  margin-bottom:18px;
+}
+
+.input-group label{
+  font-size:13px;
+  font-weight:600;
+  display:block;
+  margin-bottom:6px;
+}
+
+.input-group input{
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.1);
+  background:#0d1b2a;
+  color:white;
+  font-size:14px;
+  outline:none;
+  transition:0.3s;
+}
+
+.input-group input:focus{
+  border-color:var(--primary);
+  box-shadow:0 0 12px var(--primary-glow);
+}
+
+.btn{
+  width:100%;
+  padding:13px;
+  border:none;
+  border-radius:12px;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.3s ease;
+  font-size:15px;
+}
+
+.btn-primary{
+  background:var(--primary);
+  color:#000;
+  box-shadow:0 10px 30px var(--primary-glow);
+}
+
+.btn-primary:hover{
+  transform:scale(1.04);
+}
+
+.btn-secondary{
+  background:#1e293b;
+  color:white;
+  margin-top:10px;
+}
+
+.btn-secondary:hover{
+  background:#334155;
+}
+
+.link{
+  color:var(--primary);
+  cursor:pointer;
+  text-decoration:underline;
+  font-size:13px;
+}
+
+.center{
+  text-align:center;
+  margin-top:12px;
+}
+
+.error{
+  color:var(--danger);
+  font-size:13px;
+  margin-top:8px;
+}
+
+.hidden{
+  display:none;
+}
+
+footer{
+  margin-top:30px;
+  font-size:14px;
+  color:var(--primary);
+  text-align:center;
+}
+</style>
+</head>
+<body>
+
+<!-- REGISTER -->
+<div class="portal" id="registerView">
+  <h2>Create Account</h2>
+
+  <div class="input-group">
+    <label for="regPhone">Phone Number</label>
+    <input id="regPhone" type="tel" placeholder="+254701234567">
+  </div>
+
+  <div class="input-group">
+    <label for="regPassword">Password</label>
+    <input id="regPassword" type="password" placeholder="Enter password">
+  </div>
+
+  <div class="center">
+    <input id="showPassReg" type="checkbox"> Show Password
+  </div>
+
+  <div id="regError" class="error hidden"></div>
+
+  <button id="registerBtn" class="btn btn-primary">Register</button>
+
+  <div class="center">
+    Already registered? <span id="goLogin" class="link">Login</span>
+  </div>
+</div>
+
+<!-- LOGIN -->
+<div class="portal hidden" id="loginView">
+  <h2>Welcome Back</h2>
+
+  <div class="input-group">
+    <label for="loginPhone">Phone Number</label>
+    <input id="loginPhone" type="tel">
+  </div>
+
+  <div class="input-group">
+    <label for="loginPassword">Password</label>
+    <input id="loginPassword" type="password">
+  </div>
+
+  <div class="center">
+    <input id="rememberMe" type="checkbox"> Remember Me
+  </div>
+
+  <div id="loginError" class="error hidden"></div>
+
+  <button id="loginBtn" class="btn btn-primary">Login</button>
+  <button id="backToRegister" class="btn btn-secondary">Register</button>
+
+  <div class="center">
+    <span id="forgotLink" class="link">Forgot Password?</span>
+  </div>
+</div>
+
+<!-- RESET -->
+<div class="portal hidden" id="resetView">
+  <h2>Reset Password</h2>
+
+  <div class="input-group">
+    <label for="resetPhone">Phone Number</label>
+    <input id="resetPhone" type="tel">
+  </div>
+
+  <div class="input-group">
+    <label for="resetPassword">New Password</label>
+    <input id="resetPassword" type="password">
+  </div>
+
+  <div id="resetError" class="error hidden"></div>
+
+  <button id="resetBtn" class="btn btn-primary">Reset Password</button>
+  <button id="resetCancel" class="btn btn-secondary">Cancel</button>
+</div>
+
+<footer>
+🚀 Secure. Adapt. Evolve. Lead in the Digital Economy.
+</footer>
+
+<script>
+const YOUTUBE_URL = "https://summitsolutions28.github.io/Well8372/S1986.html";
+const EXPIRY_DAYS = 30;
+
+function openDB(){
+  return new Promise((resolve,reject)=>{
+    const request=indexedDB.open('demo_users',1);
+    request.onupgradeneeded=e=>{
+      const db=e.target.result;
+      if(!db.objectStoreNames.contains('users')){
+        db.createObjectStore('users',{keyPath:'phone'});
+      }
+    };
+    request.onsuccess=e=>resolve(e.target.result);
+    request.onerror=e=>reject(e.target.error);
+  });
+}
+
+function getUser(phone){
+  return openDB().then(db=>{
+    return new Promise((res,rej)=>{
+      const tx=db.transaction('users','readonly');
+      const store=tx.objectStore('users');
+      const req=store.get(phone);
+      req.onsuccess=()=>res(req.result);
+      req.onerror=()=>rej(req.error);
+    });
+  });
+}
+
+function deleteUser(phone){
+  return openDB().then(db=>{
+    return new Promise((res,rej)=>{
+      const tx=db.transaction('users','readwrite');
+      const store=tx.objectStore('users');
+      const req=store.delete(phone);
+      req.onsuccess=()=>res();
+      req.onerror=()=>rej(req.error);
+    });
+  });
+}
+
+function setUser(user){
+  return openDB().then(db=>{
+    return new Promise((res,rej)=>{
+      const tx=db.transaction('users','readwrite');
+      const store=tx.objectStore('users');
+      const req=store.put(user);
+      req.onsuccess=()=>res();
+      req.onerror=()=>rej(req.error);
+    });
+  });
+}
+
+function sanitizeInput(str){return str.replace(/<[^>]*>?/gm,'');}
+function normalizePhone(p){return p?p.trim().replace(/\s|-/g,''):"";}
+function el(id){return document.getElementById(id);}
+function show(viewId){
+  document.querySelectorAll('.portal').forEach(c=>c.classList.add('hidden'));
+  el(viewId).classList.remove('hidden');
+}
+
+async function hashPassword(password){
+  const encoder=new TextEncoder();
+  const data=encoder.encode(password);
+  const hashBuffer=await crypto.subtle.digest('SHA-256',data);
+  return Array.from(new Uint8Array(hashBuffer)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+const regPhone=el('regPhone'),regPassword=el('regPassword'),registerBtn=el('registerBtn'),regError=el('regError'),showPassReg=el('showPassReg'),goLogin=el('goLogin');
+const loginPhone=el('loginPhone'),loginPassword=el('loginPassword'),loginBtn=el('loginBtn'),loginError=el('loginError'),backToRegister=el('backToRegister'),rememberMe=el('rememberMe');
+const forgotLink=el('forgotLink');
+const resetPhone=el('resetPhone'),resetPassword=el('resetPassword'),resetBtn=el('resetBtn'),resetCancel=el('resetCancel'),resetError=el('resetError');
+
+showPassReg.addEventListener('change',()=>regPassword.type=showPassReg.checked?'text':'password');
+goLogin.addEventListener('click',()=>show('loginView'));
+backToRegister.addEventListener('click',()=>show('registerView'));
+forgotLink.addEventListener('click',()=>show('resetView'));
+resetCancel.addEventListener('click',()=>show('loginView'));
+
+registerBtn.addEventListener('click',async()=>{
+  const phone=sanitizeInput(normalizePhone(regPhone.value));
+  const pass=sanitizeInput(regPassword.value||'');
+  regError.classList.add('hidden');
+
+  if(!phone){regError.textContent="Enter phone number.";regError.classList.remove('hidden');return;}
+  if(!pass||pass.length<4){regError.textContent="Password must be at least 4 characters.";regError.classList.remove('hidden');return;}
+
+  const existing=await getUser(phone);
+  if(existing){regError.textContent="User already exists.";regError.classList.remove('hidden');return;}
+
+  const hashedPass=await hashPassword(pass);
+  const now=Date.now();
+  const expiresAt=now+(EXPIRY_DAYS*24*60*60*1000);
+
+  await setUser({phone,password:hashedPass,createdAt:now,expiresAt});
+  alert("Registration successful.");
+  loginPhone.value=phone;
+  show('loginView');
+});
+
+loginBtn.addEventListener('click',async()=>{
+  const phone=sanitizeInput(normalizePhone(loginPhone.value));
+  const pass=sanitizeInput(loginPassword.value||'');
+  loginError.classList.add('hidden');
+
+  if(!phone){loginError.textContent="Enter phone number.";loginError.classList.remove('hidden');return;}
+  if(!pass){loginError.textContent="Enter password.";loginError.classList.remove('hidden');return;}
+
+  const user=await getUser(phone);
+  if(!user){loginError.textContent="Invalid credentials.";loginError.classList.remove('hidden');return;}
+
+  if(Date.now()>user.expiresAt){
+    await deleteUser(phone);
+    loginError.textContent="Account expired after 30 days. Please register again.";
+    loginError.classList.remove('hidden');
+    return;
+  }
+
+  const hashedPass=await hashPassword(pass);
+  if(user.password!==hashedPass){
+    loginError.textContent="Invalid credentials.";
+    loginError.classList.remove('hidden');
+    return;
+  }
+
+  if(rememberMe.checked) localStorage.setItem('rememberedPhone',phone);
+  else localStorage.removeItem('rememberedPhone');
+
+  window.location.href=YOUTUBE_URL;
+});
+
+resetBtn.addEventListener('click',async()=>{
+  const phone=sanitizeInput(normalizePhone(resetPhone.value));
+  const newPass=sanitizeInput(resetPassword.value||'');
+  resetError.classList.add('hidden');
+
+  if(!phone){resetError.textContent="Enter phone number.";resetError.classList.remove('hidden');return;}
+  if(!newPass||newPass.length<4){resetError.textContent="New password too short.";resetError.classList.remove('hidden');return;}
+
+  const user=await getUser(phone);
+  if(!user){resetError.textContent="User not found.";resetError.classList.remove('hidden');return;}
+
+  const hashedNewPass=await hashPassword(newPass);
+  user.password=hashedNewPass;
+  await setUser(user);
+  alert("Password reset successful.");
+  show('loginView');
+});
+
+const rem=localStorage.getItem('rememberedPhone');
+if(rem){loginPhone.value=rem;rememberMe.checked=true;}
+</script>
+</body>
+</html>
